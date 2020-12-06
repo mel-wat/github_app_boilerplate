@@ -124,13 +124,13 @@ async def issue_comment_created(event, gh, *args, **kwargs):
     )
     comments_url = event.data["comment"]["url"]
 
-    # if username == "mel-wat":
-    response = await gh.post(
-        f"{comments_url}/reactions",
-        data={"content": "heart"},
-        oauth_token=installation_access_token["token"],
-        accept="application/vnd.github.squirrel-girl-preview+json",
-    )
+    if username == "mel-wat":
+        response = await gh.post(
+            f"{comments_url}/reactions",
+            data={"content": "heart"},
+            oauth_token=installation_access_token["token"],
+            accept="application/vnd.github.squirrel-girl-preview+json",
+        )
 
 
 if __name__ == "__main__":  # pragma: no cover
