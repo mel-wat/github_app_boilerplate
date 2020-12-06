@@ -123,7 +123,7 @@ async def issue_comment_created(event, gh, *args, **kwargs):
     )
 
     comment_id = event.data["comment"]["id"]
-    comments_url = event.data["issue"]["comments_url"]
+    comments_url = event.data["comment"]["url"]
     username = event.data["sender"]["login"]
 
     if username == "mel-wat":
@@ -131,8 +131,8 @@ async def issue_comment_created(event, gh, *args, **kwargs):
             f"{comments_url}/{comment_id}/reactions",
             data={"content": "heart"},
             oauth_token=installation_access_token["token"],
+            accept="application/vnd.github.squirrel-girl-preview+json",
         )
-
 
 
 if __name__ == "__main__":  # pragma: no cover
