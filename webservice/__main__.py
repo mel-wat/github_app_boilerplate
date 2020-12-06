@@ -111,6 +111,30 @@ async def pr_opened(event, gh, *args, **kwargs):
     )
 
 
+@router.register("issue_comment_created", action="created")
+async def issue_comment_created(event, gh, *args, **kwargs):
+    installation_id = event.data["installation"]["id"]
+
+    installation_access_token = await apps.get_installation_access_token(
+        gh,
+        installation_id=installation_id,
+        app_id=os.environ.get("GH_APP_ID"),
+        private_key=os.environ.get("GH_PRIVATE_KEY")
+    )
+
+    comment_id = event.data["comment"]["id"]
+    comments_url = event.data["issue"]["comments_url"]
+    username = event.data["sender"]["login"]
+
+    if username == "mel-wat":
+        response = await gh.post(
+            f"{comments_url}/{comment_id}/reactions",
+            data={"content": "heart"},
+            oauth_token=installation_access_token["token"],
+        )
+
+
+
 if __name__ == "__main__":  # pragma: no cover
     app = web.Application()
 
