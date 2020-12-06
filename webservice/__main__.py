@@ -111,7 +111,7 @@ async def pr_opened(event, gh, *args, **kwargs):
     )
 
     # add label
-    response = gh.patch(
+    response = await gh.patch(
         issue_url,
         data={
             "labels": ["needs review"]
